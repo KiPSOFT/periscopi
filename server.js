@@ -310,53 +310,7 @@ class periscope {
     }
 
 }
-
-/*
-function Api(method, params, callback, callback_fail) {
-    if (!params)
-        params = {};
-    var req = GM_xmlhttpRequest({
-        method: 'POST',
-        url: 'https://api.periscope.tv/api/v2/' + method,
-        headers: {
-            'User-Agent': 'Periscope/2699 (iPhone; iOS 8.1.2; Scale/2.00)'
-        },
-        data: JSON.stringify(params),
-        onload: function (r) {
-            var response;
-            if (r.status === 200) {
-                try {
-                    response = JSON.parse(r.responseText);
-                } catch (e) {
-                    console.warn('JSON parse error:', e);
-                }
-                if (!!response && callback)
-                    callback(response);
-            } else if (r.status == 406) {
-                alert(JSON.parse(r.responseText).errors[0].error);
-            } else {
-                response = 'API error: ' + r.status + ' ' + r.responseText;
-                if (callback_fail && Object.prototype.toString.call(callback_fail) === '[object Function]')
-                    callback_fail(response);
-            }
-            console.log('Method:', method, 'params:', params, 'response:', response);
-        }
-    });
-}
-*/
-
 app.get('/redirect', (req, res) => {
-    /* OAuthTwitter('access_token', function (oauth) {
-        console.log(oauth);
-        session_key = oauth.oauth_token;
-        session_secret = oauth.oauth_token_secret;
-        Api('loginTwitter', {
-            "session_key": session_key,
-            "session_secret": session_secret
-        }, function (response) {
-            console.log(response);
-        });
-    }, {oauth_token: req.query.oauth_token, oauth_verifier: req.query.oauth_verifier}); */
 
     let p = arr[req.query.id - 1];
     p.twitterOAuthToken = req.query.oauth_token;
@@ -367,18 +321,6 @@ app.get('/redirect', (req, res) => {
                 .then(() => {
                     console.log('Periscope login işlemi bitti.');
                     res.sendFile(path.join(__dirname + '/arama.html'));
-                    /*
-                    p.rankedBroadcastFeed()
-                        .then(sonuc => {
-                            console.log(sonuc.length + ' sonuç değerlendiriliyor...');
-                            p.arastir(sonuc)
-                                .then(h => {
-                                    console.log('Değerlendirme tamamlandı.');
-                                    res.header("Content-Type",'text/html');
-                                    res.send(h);
-                                });
-                        });
-                        */
                 });
         })
         .catch((err) => {
