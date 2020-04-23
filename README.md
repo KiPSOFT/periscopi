@@ -1,2 +1,2 @@
 # periscopi
-periscope search stream with labels. stream recognition on google cloud vision.
+periscope search streams with labels. periscope streams is recognition on google cloud vision library.
