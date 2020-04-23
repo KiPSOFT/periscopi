@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arama</title>
+    <script
+            src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+           $('#ara').click(function() {
+               $('#tablo > tbody').remove();
+               $('#tablo').append('<tbody></tbody>');
+               var aranacak = $('#aranacak').val();
+               if (aranacak !== null && aranacak !== undefined && aranacak !== '') {
+                   $.get('/ara?aranacak=' + aranacak, function(data) {
+                        if (data.length > 0) {
+                            data.forEach(function (itm) {
+                                $('#tablo > tbody').append('<tr><td>' + itm.d + '</td><td><img src="' + itm.i + '"/></td><td><a target="_blank" href="' + itm.u + '">Link</a></td></tr>');
+                            });
+                        } else $('#tablo > tbody').append('<tr><td>Herhangi bir kayıt bulamadık.</td>');
+                   });
+               } else alert('Aranacak kelimeyi veya kelimeleri belirtin. Birden fazla kelimeyi virgül ile ayırmalısınız.');
+           });
+        });
+    </script>
+</head>
+<body>
+    <label>Aranacak metinler</label>
+    <input id="aranacak" type="text">
+    <button id="ara">Ara</button>
+    <table id="tablo">
+        <tbody>
+
+        </tbody>
+    </table>
+</body>
+</html>
